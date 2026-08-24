@@ -1,46 +1,27 @@
-# Projeto Delivery Academico
+# Neon Delivery
 
-Projeto academico de Engenharia de Software para desenvolvimento de um aplicativo de delivery para uma empresa ficticia.
+Sistema de delivery em Flask com visual cyberpunk, login, painel administrativo, cadastro de produtos com foto e carrinho de compras.
 
-## Objetivo
+## Como executar
 
-Organizar o trabalho de uma equipe de 8 estudantes em uma simulacao de desenvolvimento profissional, mantendo uma base documental clara para registrar requisitos, decisoes, responsabilidades, processos e evolucao do sistema.
+1. Crie um ambiente virtual: `python -m venv .venv`
+2. Ative-o no PowerShell: `.\.venv\Scripts\Activate.ps1`
+3. Instale as dependências: `pip install -r requirements.txt`
+4. Copie `.env.example` para `.env` e preencha `DATABASE_URL` com seu PostgreSQL.
+5. Inicie: `python app.py`
+6. Acesse `http://127.0.0.1:5000`
 
-## Contexto
+Na primeira inicialização são criados o banco/tabelas e o usuário administrador:
 
-A empresa cliente ainda nao possui todos os requisitos definidos. A equipe devera construir uma primeira versao funcional em prazo curto e evoluir o aplicativo conforme novas necessidades, ideias e feedback dos usuarios.
+- E-mail: `admin@neondelivery.com`
+- Senha: `admin123`
 
-## Modelo de desenvolvimento
+Altere a senha antes de colocar o projeto em produção. Sem `DATABASE_URL`, o projeto usa SQLite local (`delivery.db`) somente para facilitar testes.
 
-O projeto utilizara o modelo incremental:
+## Organização
 
-- **V1:** primeira versao funcional e disponibilizavel, com as funcionalidades essenciais priorizadas pela equipe.
-- **V2 em diante:** evolucoes posteriores da primeira implementacao, incluindo novas funcionalidades, melhorias, correcoes, feedback e novos requisitos.
-
-O escopo detalhado de cada versao sera definido pela equipe ao longo do projeto. Nao e necessario decidir todas as funcionalidades agora.
-
-## Organizacao da documentacao
-
-- [`docs/requisitos/`](docs/requisitos/): requisitos, escopo e revisoes coletivas.
-- [`docs/arquitetura/`](docs/arquitetura/): arquitetura e decisoes tecnicas, sem definicoes antecipadas.
-- [`docs/decisoes/`](docs/decisoes/): decisoes importantes e suas justificativas.
-- [`docs/processos/`](docs/processos/): forma de trabalho, Git, tarefas, revisoes e testes.
-- [`docs/versoes/`](docs/versoes/): planejamento e acompanhamento da evolucao incremental.
-- [`docs/equipe/`](docs/equipe/): integrantes e responsabilidades principais.
-
-## Estado das definicoes
-
-Tecnologias, arquitetura tecnica, funcionalidades detalhadas, regras de Git e demais pontos dependentes de decisao da equipe estao **A definir**.
-
-## Como contribuir com a documentacao
-
-Qualquer integrante pode propor, discutir e revisar documentacao. Requisitos sao responsabilidade de toda a equipe; responsabilidades principais indicam acompanhamento e garantia de entrega, mas nao impedem colaboracao em outras areas.
-
-## Pendencias iniciais
-
-- Definir integrantes e responsabilidades principais.
-- Levantar e priorizar requisitos da V1.
-- Definir tecnologias e arquitetura tecnica.
-- Definir fluxo de trabalho, branches, commits, Pull Requests e revisao de codigo.
-- Definir testes, ferramentas e infraestrutura.
-- Avaliar posteriormente `.gitignore` e licenca conforme as tecnologias e necessidades do projeto.
+- `app.py`: rotas, autenticação, pedidos e produtos.
+- `templates/`: páginas HTML.
+- `static/css/`: identidade visual.
+- `static/js/`: interações do carrinho e painel.
+- `static/uploads/`: fotos enviadas dos produtos (criada automaticamente).
