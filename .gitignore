@@ -2,5 +2,5 @@
 .venv/
 __pycache__/
 delivery.db
-static/uploads/*
-!static/uploads/.gitkeep
+teste_1/static/uploads/*
+!teste_1/static/uploads/.gitkeep
