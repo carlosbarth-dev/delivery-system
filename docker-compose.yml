@@ -1,0 +1,90 @@
+# Sistema de Delivery - Docker Compose Orchestration
+#
+# Executa a aplicação completa:
+# - Backend FastAPI (porta 8000)
+# - Frontend Vue.js (porta 5173)
+#
+# Uso:
+#   docker-compose up           # Build + run
+#   docker-compose down         # Parar
+#   docker-compose logs -f      # Ver logs
+#
+# Acesso:
+#   Frontend: http://localhost:5173
+#   Backend: http://localhost:8000
+#   Docs API: http://localhost:8000/docs
+
+version: '3.9'
+
+services:
+  # ==========================================
+  # Backend API
+  # ==========================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: delivery-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./delivery.db
+      - DEBUG=True
+      - SECRET_KEY=dev-secret-docker
+      - CORS_ORIGINS=["http://localhost:5173", "http://localhost:3000", "http://frontend:80"]
+    volumes:
+      # Hot reload em desenvolvimento
+      - ./backend:/app
+      - /app/__pycache__
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - frontend  # Frontend não depende de backend, mas deixamos aqui para ordem de start
+    networks:
+      - delivery-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ==========================================
+  # Frontend App
+  # ==========================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: delivery-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    volumes:
+      # Hot reload em desenvolvimento
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0 --port 5173
+    networks:
+      - delivery-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5173"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+# ==========================================
+# Network
+# ==========================================
+networks:
+  delivery-network:
+    driver: bridge
+
+# ==========================================
+# Volumes (persistência de dados)
+# ==========================================
+# TODO (v0.2.0): Adicionar volume para SQLite
+# volumes:
+#   delivery_db:
+#     driver: local
