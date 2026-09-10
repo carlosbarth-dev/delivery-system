@@ -35,7 +35,14 @@ O Vite informa no terminal a URL local, normalmente `http://localhost:5173`.
 
 ## Configuração local
 
-O backend usa SQLite por padrão. Caso o projeto passe a fornecer arquivos `.env.example`, copie-os para `.env` e nunca faça commit deles.
+O projeto fornece modelos de configuração. Crie os arquivos locais antes de iniciar os serviços e nunca faça commit deles:
+
+```powershell
+Copy-Item backend\.env.example backend\.env
+Copy-Item frontend\.env.example frontend\.env
+```
+
+O backend usa SQLite por padrão. Para o MVP, mantenha `DATABASE_URL=sqlite:///./delivery.db` e `VITE_API_URL=http://localhost:8000` no frontend, salvo orientação diferente do Team Lead.
 
 ## Docker
 
