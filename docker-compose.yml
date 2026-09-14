@@ -3,6 +3,7 @@
 # Executa a aplicação completa:
 # - Backend FastAPI (porta 8000)
 # - Frontend Vue.js (porta 5173)
+# - MySQL (porta 3306)
 #
 # Uso:
 #   docker-compose up           # Build + run
@@ -17,6 +18,26 @@
 version: '3.9'
 
 services:
+  mysql:
+    image: mysql:8.4
+    container_name: delivery-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: delivery_db
+      MYSQL_USER: delivery_app
+      MYSQL_PASSWORD: delivery_app_dev
+      MYSQL_ROOT_PASSWORD: root_dev_only
+    volumes:
+      - delivery_mysql_data:/var/lib/mysql
+    networks:
+      - delivery-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot_dev_only"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   # ==========================================
   # Backend API
   # ==========================================
@@ -28,7 +49,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=sqlite:///./delivery.db
+      - DATABASE_URL=mysql+pymysql://delivery_app:delivery_app_dev@mysql:3306/delivery_db
       - DEBUG=True
       - SECRET_KEY=dev-secret-docker
       - CORS_ORIGINS=["http://localhost:5173", "http://localhost:3000", "http://frontend:80"]
@@ -38,7 +59,8 @@ services:
       - /app/__pycache__
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
-      - frontend  # Frontend não depende de backend, mas deixamos aqui para ordem de start
+      mysql:
+        condition: service_healthy
     networks:
       - delivery-network
     healthcheck:
@@ -84,7 +106,5 @@ networks:
 # ==========================================
 # Volumes (persistência de dados)
 # ==========================================
-# TODO (v0.2.0): Adicionar volume para SQLite
-# volumes:
-#   delivery_db:
-#     driver: local
+volumes:
+  delivery_mysql_data:

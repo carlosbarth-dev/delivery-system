@@ -9,7 +9,7 @@ Vue 3 (interface e estado local)
 FastAPI (validação e regras de negócio)
             │ ORM
             ▼
-SQLite (dados do MVP)
+MySQL (dados do MVP)
 ```
 
 O frontend mantém apenas estado de interface e o carrinho temporário. O backend valida a solicitação, consulta o catálogo, calcula valores e persiste o pedido. Valores enviados pelo cliente devem ser recalculados no servidor.
@@ -22,7 +22,7 @@ O frontend mantém apenas estado de interface e o carrinho temporário. O backen
 | Axios | Comunicação HTTP e apresentação consistente de falhas. |
 | FastAPI + Pydantic | Endpoints, validação de entrada e respostas de erro. |
 | SQLAlchemy | Modelagem e acesso ao banco. |
-| SQLite | Persistência local do MVP; abstrair acesso para evolução futura. |
+| MySQL | Persistência relacional do MVP, acessada por SQLAlchemy e PyMySQL. |
 
 ## Domínio mínimo
 
@@ -66,4 +66,4 @@ Para retirada, `pronto` pode seguir diretamente para `entregue`. Cancelamento é
 
 ## Evolução
 
-SQLite é suficiente para o trabalho acadêmico e ambiente local. Uma migração para banco gerenciado, autenticação e notificações só será planejada depois de o MVP estar validado.
+MySQL é o banco adotado desde o MVP, inclusive no ambiente local. Uma migração para banco gerenciado, autenticação e notificações só será planejada depois de o MVP estar validado.

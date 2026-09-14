@@ -4,6 +4,7 @@
 
 - Python 3.9 ou superior
 - Node.js 18 ou superior e npm
+- MySQL 8 ou superior
 - Git
 - Docker Desktop (opcional)
 
@@ -42,7 +43,22 @@ Copy-Item backend\.env.example backend\.env
 Copy-Item frontend\.env.example frontend\.env
 ```
 
-O backend usa SQLite por padrão. Para o MVP, mantenha `DATABASE_URL=sqlite:///./delivery.db` e `VITE_API_URL=http://localhost:8000` no frontend, salvo orientação diferente do Team Lead.
+Crie o banco e o usuário local uma vez:
+
+```sql
+CREATE DATABASE delivery_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'delivery_app'@'localhost' IDENTIFIED BY 'defina-uma-senha-local';
+GRANT ALL PRIVILEGES ON delivery_db.* TO 'delivery_app'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+Em `backend/.env`, configure a mesma senha na URL, por exemplo:
+
+```text
+DATABASE_URL=mysql+pymysql://delivery_app:defina-uma-senha-local@localhost:3306/delivery_db
+```
+
+O frontend deve manter `VITE_API_URL=http://localhost:8000`, salvo orientação diferente do Team Lead.
 
 ## Docker
 

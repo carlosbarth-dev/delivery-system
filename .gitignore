@@ -1,7 +1,6 @@
 .env
 .venv/
 __pycache__/
-delivery.db
 docs/ORDEM_TRABALHO_EQUIPE.md
 ORDEM_TRABALHO_EQUIPE.md
 teste_1/static/uploads/*

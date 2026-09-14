@@ -76,7 +76,7 @@ Receber identificação do pedido e acompanhar o status
 - Pagamento on-line integrado ou confirmação automática de Pix.
 - Rastreamento GPS, WebSocket, notificações por e-mail/SMS e aplicativo de entregador.
 - Painel administrativo, cupons, avaliações e analytics.
-- Infraestrutura de produção, microsserviços ou migração para MySQL.
+- Infraestrutura de produção, microsserviços ou migração para banco gerenciado.
 
 ## Próximos incrementos
 

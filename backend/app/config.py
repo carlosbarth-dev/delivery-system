@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = os.getenv(
         "DATABASE_URL", 
-        "sqlite:///./delivery.db"
+        "mysql+pymysql://delivery_app:change-me@localhost:3306/delivery_db"
     )
     
     # App
@@ -61,7 +61,7 @@ Base = declarative_base()
 # Engine - conexão com banco de dados
 engine = create_engine(
     settings.DATABASE_URL,
-    connect_args={"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {},
+    pool_pre_ping=True,
     echo=settings.DEBUG  # Log de SQL em desenvolvimento
 )
 
@@ -97,9 +97,8 @@ def init_db():
     Executa seed data (produtos iniciais, etc).
     
     TODO (T0.1 - Seed):
-    - Criar 3-5 produtos de exemplo (ver teste_1/app.py linha 80)
-    - Inserir no banco se estiver vazio
-    - Referência: docs/ARQUITETURA.md seção "Seed Data"
+    - Criar restaurantes, categorias, produtos e taxas de exemplo.
+    - Inserir dados somente se o banco estiver vazio.
     """
     
     # Criar todas as tabelas baseado nos models

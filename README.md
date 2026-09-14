@@ -21,7 +21,7 @@ O escopo oficial está em [docs/ROADMAP.md](./docs/ROADMAP.md). Antes de impleme
 | --- | --- |
 | Frontend | Vue 3, Vite, Pinia e Axios |
 | Backend | Python, FastAPI, SQLAlchemy e Pydantic |
-| Banco de dados do MVP | SQLite |
+| Banco de dados do MVP | MySQL |
 | Ambiente local | Docker Compose (opcional) |
 
 ## Status
