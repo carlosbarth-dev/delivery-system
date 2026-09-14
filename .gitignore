@@ -1,0 +1,13 @@
+# Arquivos locais: nunca entram na entrega.
+.env
+**/.env
+.env.*
+**/.env.*
+!.env.example
+!**/.env.example
+.venv/
+**/__pycache__/
+.pytest_cache/
+*.py[cod]
+*.db
+*.db-*
