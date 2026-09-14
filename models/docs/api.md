@@ -1,29 +1,26 @@
 # API Delivery
 
-O arquivo `database/api/main.py` define as rotas da API. Para ela aparecer no
-navegador, o servidor precisa estar em execução.
-
-No terminal, entre na pasta do arquivo:
+Inicie a API a partir da raiz do projeto:
 
 ```powershell
-cd models/database/api
-python main.py
+python -m uvicorn models.database.api.main:app --reload --port 8001
 ```
 
-Ou use o comando direto do Uvicorn (recomendado durante o desenvolvimento):
-
-```powershell
-cd models/database/api
-python -m uvicorn main:app --reload --port 8001
-```
-
-Com o terminal aberto e a mensagem `Uvicorn running on ...`, acesse:
+Endereços locais:
 
 - `http://127.0.0.1:8001/` — rota inicial;
-- `http://127.0.0.1:8001/health` — confirmação de que a API está online;
-- `http://127.0.0.1:8001/docs` — página interativa gerada automaticamente pelo FastAPI.
+- `http://127.0.0.1:8001/health` — verificação de disponibilidade;
+- `http://127.0.0.1:8001/docs` — documentação interativa.
 
-`127.0.0.1` (ou `localhost`) significa **apenas este computador**. Para outras
-pessoas acessarem pela internet, é necessário publicar a aplicação em um serviço
-de hospedagem ou configurar um túnel; iniciar o Uvicorn local não cria um site
-público.
+## Fluxo do MVP
+
+1. `POST /checkout`, com o cabeçalho `Idempotency-Key`, recebe cliente, restaurante,
+   tipo de recebimento (`ENTREGA` ou `RETIRADA`) e itens. A API busca os preços no
+   banco, calcula subtotal, taxa de entrega e total, e cria pedido e itens.
+2. `POST /pagamentos`, também com `Idempotency-Key`, inicia uma tentativa de pagamento.
+3. `PATCH /pagamentos/{id}` recebe o resultado (`APROVADO`, `RECUSADO` ou
+   `CANCELADO`). Ao aprovar, o pedido passa para `CONFIRMADO`.
+4. `PATCH /pedidos/{id}/status` avança o pedido até entrega ou retirada.
+
+Uma chave de idempotência deve ser nova para cada operação e repetida somente ao
+reenviar a mesma requisição. Com uma chave já usada, a API devolve o registro original.
