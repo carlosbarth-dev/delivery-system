@@ -14,6 +14,41 @@ git checkout -b feature/nome-curto-da-tarefa
 
 Não escolha nem atribua trabalho editando arquivos de documentação. O planejamento e a distribuição são conduzidos pelo Team Lead.
 
+## Quando sua branch foi criada a partir de uma versão antiga
+
+Uma branch antiga não significa que o trabalho deve ser apagado. Ela funciona como um rascunho ou backup do que já foi feito. O problema é fazer merge dela diretamente em `dev`: isso pode trazer arquivos duplicados, rotas antigas ou uma estrutura que o projeto não usa mais.
+
+Nessa situação, mantenha a branch antiga guardada e crie uma nova a partir da `dev` atual:
+
+```bash
+# Primeiro, garanta que não há alteração sem commit na sua branch atual.
+git fetch origin
+git switch dev
+git pull origin dev
+git switch -c feat/area-objetivo
+```
+
+Exemplos de nomes:
+
+- `feat/modelagem-pedidos-mysql`
+- `feat/catalogo-restaurantes-frontend`
+- `feat/seguranca-catalogo-mvp`
+
+Na nova branch, reaproveite apenas os arquivos e trechos úteis da branch antiga. Adapte-os à estrutura, aos nomes e ao contrato atuais; não copie uma pasta inteira sem revisar. Depois, teste, faça novos commits e abra uma nova PR para `dev`.
+
+```bash
+git add .
+git commit -m "feat: descreve a alteração"
+git push origin feat/area-objetivo
+```
+
+### O que fazer com a branch e a PR antigas
+
+1. Não apague a branch antiga enquanto a nova PR ainda não foi aprovada: ela é seu backup.
+2. Deixe um comentário na PR antiga informando que ela foi substituída pela nova PR, incluindo o link ou número dela.
+3. Feche a PR antiga sem fazer merge.
+4. Depois que a nova PR entrar em `dev` e o conteúdo estiver confirmado, a branch antiga pode ser apagada.
+
 ## Durante o desenvolvimento
 
 - Faça alterações pequenas e relacionadas à tarefa.
