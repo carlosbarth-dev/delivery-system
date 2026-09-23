@@ -5,6 +5,7 @@ uvicorn[standard]==0.24.0
 # Database ORM
 sqlalchemy==2.0.23
 sqlalchemy-utils==0.41.1
+PyMySQL==1.1.1
 
 # Data Validation
 pydantic==2.5.0
