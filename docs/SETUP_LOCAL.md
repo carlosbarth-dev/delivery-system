@@ -60,6 +60,8 @@ DATABASE_URL=mysql+pymysql://delivery_app:defina-uma-senha-local@localhost:3306/
 
 O frontend deve manter `VITE_API_URL=http://localhost:8000`, salvo orientação diferente do Team Lead.
 
+Para criar as tabelas do MVP em um banco novo, execute `backend/database/schema.sql` com um usuário MySQL que possa criar o banco. Para um banco existente, siga o procedimento de [migração do MVP](./mvp/banco.md). O backend lê `DATABASE_URL` do arquivo `.env`.
+
 ## Docker
 
 Com Docker Desktop em execução, na raiz do projeto:

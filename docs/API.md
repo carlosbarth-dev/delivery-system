@@ -4,6 +4,10 @@ Este é o contrato-alvo do MVP. Endpoints só devem ser considerados disponívei
 
 Base local: `http://localhost:8000`. A documentação interativa do FastAPI, quando a API estiver executando, fica em `/docs`.
 
+## Endpoints de checkout integrados
+
+O backend já registra `POST /checkout`, `GET /pedidos/{id}`, `POST /pagamentos`, `PATCH /pagamentos/{id}` e `PATCH /pedidos/{id}/status`. Os detalhes estão em [docs/mvp/endpoints.md](./mvp/endpoints.md). A implementação atual do checkout recebe `cliente_id` existente; o fluxo anônimo descrito abaixo continua sendo o contrato-alvo e ainda não está completo.
+
 ## Convenções
 
 - Datas em ISO 8601 UTC.

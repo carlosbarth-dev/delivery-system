@@ -9,6 +9,7 @@ Esta pasta contém somente a documentação que a equipe precisa para desenvolve
 | [API.md](./API.md) | Para implementar ou integrar endpoints. |
 | [SETUP_LOCAL.md](./SETUP_LOCAL.md) | Para preparar e executar o ambiente local. |
 | [CONTRIBUINDO.md](./CONTRIBUINDO.md) | Para criar branches, pull requests e revisões. |
+| [MVP de checkout](./mvp/README.md) | Para modelos, endpoints, fluxo e banco de dados do checkout/pagamento. |
 
 ## Ordem de leitura
 

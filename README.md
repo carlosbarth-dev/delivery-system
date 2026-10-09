@@ -26,7 +26,7 @@ O escopo oficial está em [docs/ROADMAP.md](./docs/ROADMAP.md). Antes de impleme
 
 ## Status
 
-O repositório contém a estrutura inicial do projeto. O MVP está em desenvolvimento; a situação das entregas é acompanhada pelo Team Lead, não por documentos públicos de tarefas.
+O projeto tem o fluxo inicial de checkout e pagamentos organizado no backend. Catálogo, checkout anônimo e integração completa com o frontend seguem em desenvolvimento, conforme o [roadmap](./docs/ROADMAP.md).
 
 ## Executar localmente
 

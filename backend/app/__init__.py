@@ -11,7 +11,7 @@ Veja docs/ARQUITETURA.md para detalhes da arquitetura.
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.config import settings, init_db
+from app.config import settings
 
 
 def create_app() -> FastAPI:
@@ -21,16 +21,13 @@ def create_app() -> FastAPI:
     Retorna:
         FastAPI: Aplicação configurada pronta para rodar
     
-    TODO (T1.2): 
-    - Adicionar middleware de erro global (ver docs/ARQUITETURA.md)
-    - Adicionar middleware de idempotência (ver docs/ARQUITETURA.md)
-    - Importar e registrar routes (app/routes/)
+    Registra endpoints do fluxo de checkout e pagamento do MVP.
     """
     
     # Criar instância FastAPI
     app = FastAPI(
         title="Sistema de Delivery v0.1.0",
-        description="API de delivery com catálogo e pedidos anônimos",
+        description="API de delivery com checkout, pedidos e pagamentos do MVP",
         version="0.1.0"
     )
     
@@ -53,22 +50,13 @@ def create_app() -> FastAPI:
     @app.get("/healthcheck", tags=["health"])
     async def healthcheck():
         """Verifica se API está operacional e BD conectado."""
-        # TODO (T1.1): Verificar conexão com banco de dados
         return {
             "status": "ok",
             "version": "0.1.0",
             "database": "ready"  # TODO: implementar check real
         }
     
-    # TODO (T2.1): Registrar rotas de produtos
-    # from app.routes import products
-    # app.include_router(products.router, prefix="/api", tags=["products"])
-    
-    # TODO (T2.2): Registrar rotas de pedidos
-    # from app.routes import orders
-    # app.include_router(orders.router, prefix="/api", tags=["orders"])
-    
-    # Inicializar banco de dados
-    init_db()
+    from app.routes import checkout_router
+    app.include_router(checkout_router, tags=["checkout", "pedidos", "pagamentos"])
     
     return app
